@@ -5,7 +5,7 @@ import type { Game, Player } from './types.js';
 
 function averageRatingOfOpponents(
   playerId: string,
-  games: Game[],
+  games: Game[][],
   players: Player[],
 ): number {
   const opponentRatings: number[] = [];
@@ -28,7 +28,7 @@ function averageRatingOfOpponents(
   );
 }
 
-function playerScore(playerId: string, games: Game[]): number {
+function playerScore(playerId: string, games: Game[][]): number {
   let sum = 0;
   for (const g of gamesForPlayer(playerId, games)) {
     sum += g.whiteId === playerId ? g.result : 1 - g.result;
@@ -48,7 +48,7 @@ function scoringProbability(ratingDiff: number): number {
 
 function tournamentPerformanceRating(
   playerId: string,
-  games: Game[],
+  games: Game[][],
   players: Player[],
 ): number {
   const aro = averageRatingOfOpponents(playerId, games, players);
@@ -58,7 +58,7 @@ function tournamentPerformanceRating(
   if (otbGames.length === 0) {
     return aro;
   }
-  const actualScore = playerScore(playerId, otbGames);
+  const actualScore = playerScore(playerId, games);
   const p = actualScore / otbGames.length;
   const clampedIndex = Math.min(100, Math.max(0, Math.round(p * 100)));
   const dp = DP_TABLE[clampedIndex] ?? 0;
@@ -67,7 +67,7 @@ function tournamentPerformanceRating(
 
 function perfectTournamentPerformance(
   playerId: string,
-  games: Game[],
+  games: Game[][],
   players: Player[],
 ): number {
   const otbGames = gamesForPlayer(playerId, games).filter(
@@ -86,7 +86,7 @@ function perfectTournamentPerformance(
     }
   }
 
-  const actualScore = playerScore(playerId, otbGames);
+  const actualScore = playerScore(playerId, games);
 
   if (actualScore === 0) {
     const minRating = Math.min(...opponentRatings);
@@ -118,7 +118,7 @@ function perfectTournamentPerformance(
 
 function averagePerformanceRatingOfOpponents(
   playerId: string,
-  games: Game[],
+  games: Game[][],
   players: Player[],
 ): number {
   const otbGames = gamesForPlayer(playerId, games).filter(
@@ -138,7 +138,7 @@ function averagePerformanceRatingOfOpponents(
 
 function averagePerfectPerformanceOfOpponents(
   playerId: string,
-  games: Game[],
+  games: Game[][],
   players: Player[],
 ): number {
   const otbGames = gamesForPlayer(playerId, games).filter(
