@@ -1,7 +1,8 @@
-import { tournamentPerformanceRating } from './tournament-performance-rating.js';
 import { BYE_SENTINEL, gamesForPlayer } from './utilities.js';
 
 import type { Game, Player } from './types.js';
+
+import { tournamentPerformanceRating } from './index.js';
 
 function averagePerformanceRatingOfOpponents(
   player: string,
@@ -23,6 +24,9 @@ function averagePerformanceRatingOfOpponents(
   return tprValues.reduce((sum, v) => sum + v, 0) / tprValues.length;
 }
 
-export { averagePerformanceRatingOfOpponents as tiebreak };
+export {
+  averagePerformanceRatingOfOpponents,
+  averagePerformanceRatingOfOpponents as tiebreak,
+};
 
-export { type GameKind, type Result, type Game, type Player } from './types.js';
+export type { GameKind, Result, Game, Player } from './types.js';

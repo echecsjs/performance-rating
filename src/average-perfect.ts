@@ -1,4 +1,4 @@
-import { perfectTournamentPerformance } from './perfect-tournament-performance.js';
+import { perfectTournamentPerformance } from './perfect.js';
 import { BYE_SENTINEL, gamesForPlayer } from './utilities.js';
 
 import type { Game, Player } from './types.js';
@@ -23,6 +23,9 @@ function averagePerfectPerformanceOfOpponents(
   return ptpValues.reduce((sum, v) => sum + v, 0) / ptpValues.length;
 }
 
-export { averagePerfectPerformanceOfOpponents as tiebreak };
+export {
+  averagePerfectPerformanceOfOpponents,
+  averagePerfectPerformanceOfOpponents as tiebreak,
+};
 
-export { type GameKind, type Result, type Game, type Player } from './types.js';
+export type { GameKind, Result, Game, Player } from './types.js';
