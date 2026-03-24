@@ -5,7 +5,7 @@ import {
   averagePerformanceRatingOfOpponents,
   perfectTournamentPerformance,
   tournamentPerformanceRating,
-} from '../index.js';
+} from '../functions.js';
 
 import type { Game, Player } from '../types.js';
 

@@ -29,6 +29,18 @@
     ".": {
       "import": "./dist/index.js",
       "types": "./dist/index.d.ts"
+    },
+    "./average": {
+      "import": "./dist/average.js",
+      "types": "./dist/average.d.ts"
+    },
+    "./average-perfect": {
+      "import": "./dist/average-perfect.js",
+      "types": "./dist/average-perfect.d.ts"
+    },
+    "./perfect": {
+      "import": "./dist/perfect.js",
+      "types": "./dist/perfect.d.ts"
     }
   },
   "files": [
@@ -48,7 +60,6 @@
     "typescript"
   ],
   "license": "MIT",
-  "main": "dist/index.js",
   "name": "@echecs/performance-rating",
   "publishConfig": {
     "access": "public"
@@ -72,6 +83,5 @@
   },
   "sideEffects": false,
   "type": "module",
-  "types": "dist/index.d.ts",
-  "version": "0.3.0"
+  "version": "1.0.0"
 }
