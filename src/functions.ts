@@ -4,16 +4,16 @@ import { BYE_SENTINEL, gamesForPlayer } from './utilities.js';
 import type { Game, Player } from './types.js';
 
 function averageRatingOfOpponents(
-  playerId: string,
+  player: string,
   games: Game[][],
   players: Player[],
 ): number {
   const opponentRatings: number[] = [];
-  for (const g of gamesForPlayer(playerId, games)) {
+  for (const g of gamesForPlayer(player, games)) {
     if (g.black === BYE_SENTINEL || g.white === BYE_SENTINEL) {
       continue;
     }
-    const opponentId = g.white === playerId ? g.black : g.white;
+    const opponentId = g.white === player ? g.black : g.white;
     const opponent = players.find((p) => p.id === opponentId);
     if (opponent?.rating !== undefined) {
       opponentRatings.push(opponent.rating);
@@ -28,10 +28,10 @@ function averageRatingOfOpponents(
   );
 }
 
-function playerScore(playerId: string, games: Game[][]): number {
+function playerScore(player: string, games: Game[][]): number {
   let sum = 0;
-  for (const g of gamesForPlayer(playerId, games)) {
-    sum += g.white === playerId ? g.result : 1 - g.result;
+  for (const g of gamesForPlayer(player, games)) {
+    sum += g.white === player ? g.result : 1 - g.result;
   }
   return sum;
 }
@@ -47,18 +47,18 @@ function scoringProbability(ratingDiff: number): number {
 }
 
 function tournamentPerformanceRating(
-  playerId: string,
+  player: string,
   games: Game[][],
   players: Player[],
 ): number {
-  const aro = averageRatingOfOpponents(playerId, games, players);
-  const otbGames = gamesForPlayer(playerId, games).filter(
+  const aro = averageRatingOfOpponents(player, games, players);
+  const otbGames = gamesForPlayer(player, games).filter(
     (g) => g.black !== BYE_SENTINEL && g.white !== BYE_SENTINEL,
   );
   if (otbGames.length === 0) {
     return aro;
   }
-  const actualScore = playerScore(playerId, games);
+  const actualScore = playerScore(player, games);
   const p = actualScore / otbGames.length;
   const clampedIndex = Math.min(100, Math.max(0, Math.round(p * 100)));
   const dp = DP_TABLE[clampedIndex] ?? 0;
@@ -66,11 +66,11 @@ function tournamentPerformanceRating(
 }
 
 function perfectTournamentPerformance(
-  playerId: string,
+  player: string,
   games: Game[][],
   players: Player[],
 ): number {
-  const otbGames = gamesForPlayer(playerId, games).filter(
+  const otbGames = gamesForPlayer(player, games).filter(
     (g) => g.black !== BYE_SENTINEL && g.white !== BYE_SENTINEL,
   );
   if (otbGames.length === 0) {
@@ -79,14 +79,14 @@ function perfectTournamentPerformance(
 
   const opponentRatings: number[] = [];
   for (const g of otbGames) {
-    const opponentId = g.white === playerId ? g.black : g.white;
+    const opponentId = g.white === player ? g.black : g.white;
     const opponent = players.find((p) => p.id === opponentId);
     if (opponent?.rating !== undefined) {
       opponentRatings.push(opponent.rating);
     }
   }
 
-  const actualScore = playerScore(playerId, games);
+  const actualScore = playerScore(player, games);
 
   if (actualScore === 0) {
     const minRating = Math.min(...opponentRatings);
@@ -117,16 +117,16 @@ function perfectTournamentPerformance(
 }
 
 function averagePerformanceRatingOfOpponents(
-  playerId: string,
+  player: string,
   games: Game[][],
   players: Player[],
 ): number {
-  const otbGames = gamesForPlayer(playerId, games).filter(
+  const otbGames = gamesForPlayer(player, games).filter(
     (g) => g.black !== BYE_SENTINEL && g.white !== BYE_SENTINEL,
   );
   const tprValues: number[] = [];
   for (const g of otbGames) {
-    const opponentId = g.white === playerId ? g.black : g.white;
+    const opponentId = g.white === player ? g.black : g.white;
     const tpr = tournamentPerformanceRating(opponentId, games, players);
     tprValues.push(tpr);
   }
@@ -137,16 +137,16 @@ function averagePerformanceRatingOfOpponents(
 }
 
 function averagePerfectPerformanceOfOpponents(
-  playerId: string,
+  player: string,
   games: Game[][],
   players: Player[],
 ): number {
-  const otbGames = gamesForPlayer(playerId, games).filter(
+  const otbGames = gamesForPlayer(player, games).filter(
     (g) => g.black !== BYE_SENTINEL && g.white !== BYE_SENTINEL,
   );
   const ptpValues: number[] = [];
   for (const g of otbGames) {
-    const opponentId = g.white === playerId ? g.black : g.white;
+    const opponentId = g.white === player ? g.black : g.white;
     const ptp = perfectTournamentPerformance(opponentId, games, players);
     ptpValues.push(ptp);
   }
