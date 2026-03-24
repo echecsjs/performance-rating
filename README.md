@@ -23,6 +23,7 @@ npm install @echecs/performance-rating
 
 ```typescript
 import { tournamentPerformanceRating } from '@echecs/performance-rating';
+import type { Game, GameKind } from '@echecs/performance-rating';
 
 const players = [
   { id: 'A', rating: 1800 },
@@ -31,10 +32,12 @@ const players = [
   { id: 'D', rating: 1900 },
 ];
 // games[n] = round n+1; Game has no `round` field
-const games = [
+const games: Game[][] = [
   [{ black: 'B', result: 1, white: 'A' }], // round 1
   [{ black: 'C', result: 0.5, white: 'A' }], // round 2
   [{ black: 'A', result: 0, white: 'D' }], // round 3
+  // Byes excluded from performance calculations
+  [{ black: '', kind: 'half-bye', result: 0.5, white: 'A' }], // round 4
 ];
 
 const tpr = tournamentPerformanceRating('A', games, players);
@@ -46,7 +49,9 @@ const tpr = tournamentPerformanceRating('A', games, players);
 All functions require a `players` array whose entries carry a `rating` field and
 return `number`. They return `0` when no rated opponents have been faced. Round
 is determined by array position: `games[0]` = round 1, `games[1]` = round 2,
-etc. The `Game` type has no `round` field.
+etc. The `Game` type has no `round` field. The optional `kind?: GameKind` field
+on `Game` classifies unplayed rounds; only over-the-board games (no `kind`, or
+`kind` absent) contribute to performance calculations.
 
 ### `tournamentPerformanceRating(playerId, games, players)`
 
