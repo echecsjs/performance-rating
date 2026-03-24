@@ -30,10 +30,11 @@ const players = [
   { id: 'C', rating: 1700 },
   { id: 'D', rating: 1900 },
 ];
+// games[n] = round n+1; Game has no `round` field
 const games = [
-  { blackId: 'B', result: 1, round: 1, whiteId: 'A' },
-  { blackId: 'C', result: 0.5, round: 2, whiteId: 'A' },
-  { blackId: 'A', result: 0, round: 3, whiteId: 'D' },
+  [{ blackId: 'B', result: 1, whiteId: 'A' }], // round 1
+  [{ blackId: 'C', result: 0.5, whiteId: 'A' }], // round 2
+  [{ blackId: 'A', result: 0, whiteId: 'D' }], // round 3
 ];
 
 const tpr = tournamentPerformanceRating('A', games, players);
@@ -43,9 +44,9 @@ const tpr = tournamentPerformanceRating('A', games, players);
 ## API
 
 All functions require a `players` array whose entries carry a `rating` field and
-return `number`. They return `0` when no rated opponents have been faced. They
-are drop-in compatible with the shared `Tiebreak` type
-`(playerId: string, games: Game[], players: Player[]) => number`.
+return `number`. They return `0` when no rated opponents have been faced. Round
+is determined by array position: `games[0]` = round 1, `games[1]` = round 2,
+etc. The `Game` type has no `round` field.
 
 ### `tournamentPerformanceRating(playerId, games, players)`
 
@@ -55,7 +56,7 @@ player's percentage score (points ÷ games played). Byes are excluded from both
 the opponent average and the score percentage.
 
 ```typescript
-tournamentPerformanceRating(playerId: string, games: Game[], players: Player[]): number
+tournamentPerformanceRating(playerId: string, games: Game[][], players: Player[]): number
 ```
 
 ### `perfectTournamentPerformance(playerId, games, players)`
@@ -67,7 +68,7 @@ function. Returns `0` when no games have been played. Returns `minRating - 800`
 for a 0% score and `maxRating + 800` for a 100% score.
 
 ```typescript
-perfectTournamentPerformance(playerId: string, games: Game[], players: Player[]): number
+perfectTournamentPerformance(playerId: string, games: Game[][], players: Player[]): number
 ```
 
 ### `averagePerformanceRatingOfOpponents(playerId, games, players)`
@@ -78,7 +79,7 @@ perfectTournamentPerformance(playerId: string, games: Game[], players: Player[])
 opponents have been faced.
 
 ```typescript
-averagePerformanceRatingOfOpponents(playerId: string, games: Game[], players: Player[]): number
+averagePerformanceRatingOfOpponents(playerId: string, games: Game[][], players: Player[]): number
 ```
 
 ### `averagePerfectPerformanceOfOpponents(playerId, games, players)`
@@ -88,7 +89,7 @@ averagePerformanceRatingOfOpponents(playerId: string, games: Game[], players: Pl
 arithmetic mean. Returns `0` when no opponents have been faced.
 
 ```typescript
-averagePerfectPerformanceOfOpponents(playerId: string, games: Game[], players: Player[]): number
+averagePerfectPerformanceOfOpponents(playerId: string, games: Game[][], players: Player[]): number
 ```
 
 ## Contributing
