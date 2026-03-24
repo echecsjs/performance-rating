@@ -1,11 +1,9 @@
 import { describe, expect, it } from 'vitest';
 
-import {
-  averagePerfectPerformanceOfOpponents,
-  averagePerformanceRatingOfOpponents,
-  perfectTournamentPerformance,
-  tournamentPerformanceRating,
-} from '../functions.js';
+import { tiebreak as averagePerfectPerformanceOfOpponents } from '../average-perfect.js';
+import { tiebreak as averagePerformanceRatingOfOpponents } from '../average.js';
+import { tiebreak as tournamentPerformanceRating } from '../index.js';
+import { tiebreak as perfectTournamentPerformance } from '../perfect.js';
 
 import type { Game, Player } from '../types.js';
 
