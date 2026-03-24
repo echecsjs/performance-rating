@@ -96,7 +96,7 @@ pnpm lint && pnpm test && pnpm build
   results.
 - `averagePerfectPerformanceOfOpponents` applies `perfectTournamentPerformance`
   to each opponent and averages the results.
-- A `Game` with `blackId: ''` (empty string) represents a **bye**. Byes are
+- A `Game` with `black: ''` (empty string) represents a **bye**. Byes are
   excluded from all calculations — there is no rated opponent and no meaningful
   score contribution for performance purposes.
 - Both lookup tables (`DP_TABLE`, `PD_TABLE`) must be named with

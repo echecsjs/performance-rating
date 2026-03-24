@@ -10,10 +10,10 @@ function averageRatingOfOpponents(
 ): number {
   const opponentRatings: number[] = [];
   for (const g of gamesForPlayer(playerId, games)) {
-    if (g.blackId === BYE_SENTINEL || g.whiteId === BYE_SENTINEL) {
+    if (g.black === BYE_SENTINEL || g.white === BYE_SENTINEL) {
       continue;
     }
-    const opponentId = g.whiteId === playerId ? g.blackId : g.whiteId;
+    const opponentId = g.white === playerId ? g.black : g.white;
     const opponent = players.find((p) => p.id === opponentId);
     if (opponent?.rating !== undefined) {
       opponentRatings.push(opponent.rating);
@@ -31,7 +31,7 @@ function averageRatingOfOpponents(
 function playerScore(playerId: string, games: Game[][]): number {
   let sum = 0;
   for (const g of gamesForPlayer(playerId, games)) {
-    sum += g.whiteId === playerId ? g.result : 1 - g.result;
+    sum += g.white === playerId ? g.result : 1 - g.result;
   }
   return sum;
 }
@@ -53,7 +53,7 @@ function tournamentPerformanceRating(
 ): number {
   const aro = averageRatingOfOpponents(playerId, games, players);
   const otbGames = gamesForPlayer(playerId, games).filter(
-    (g) => g.blackId !== BYE_SENTINEL && g.whiteId !== BYE_SENTINEL,
+    (g) => g.black !== BYE_SENTINEL && g.white !== BYE_SENTINEL,
   );
   if (otbGames.length === 0) {
     return aro;
@@ -71,7 +71,7 @@ function perfectTournamentPerformance(
   players: Player[],
 ): number {
   const otbGames = gamesForPlayer(playerId, games).filter(
-    (g) => g.blackId !== BYE_SENTINEL && g.whiteId !== BYE_SENTINEL,
+    (g) => g.black !== BYE_SENTINEL && g.white !== BYE_SENTINEL,
   );
   if (otbGames.length === 0) {
     return 0;
@@ -79,7 +79,7 @@ function perfectTournamentPerformance(
 
   const opponentRatings: number[] = [];
   for (const g of otbGames) {
-    const opponentId = g.whiteId === playerId ? g.blackId : g.whiteId;
+    const opponentId = g.white === playerId ? g.black : g.white;
     const opponent = players.find((p) => p.id === opponentId);
     if (opponent?.rating !== undefined) {
       opponentRatings.push(opponent.rating);
@@ -122,11 +122,11 @@ function averagePerformanceRatingOfOpponents(
   players: Player[],
 ): number {
   const otbGames = gamesForPlayer(playerId, games).filter(
-    (g) => g.blackId !== BYE_SENTINEL && g.whiteId !== BYE_SENTINEL,
+    (g) => g.black !== BYE_SENTINEL && g.white !== BYE_SENTINEL,
   );
   const tprValues: number[] = [];
   for (const g of otbGames) {
-    const opponentId = g.whiteId === playerId ? g.blackId : g.whiteId;
+    const opponentId = g.white === playerId ? g.black : g.white;
     const tpr = tournamentPerformanceRating(opponentId, games, players);
     tprValues.push(tpr);
   }
@@ -142,11 +142,11 @@ function averagePerfectPerformanceOfOpponents(
   players: Player[],
 ): number {
   const otbGames = gamesForPlayer(playerId, games).filter(
-    (g) => g.blackId !== BYE_SENTINEL && g.whiteId !== BYE_SENTINEL,
+    (g) => g.black !== BYE_SENTINEL && g.white !== BYE_SENTINEL,
   );
   const ptpValues: number[] = [];
   for (const g of otbGames) {
-    const opponentId = g.whiteId === playerId ? g.blackId : g.whiteId;
+    const opponentId = g.white === playerId ? g.black : g.white;
     const ptp = perfectTournamentPerformance(opponentId, games, players);
     ptpValues.push(ptp);
   }

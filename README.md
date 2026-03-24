@@ -32,9 +32,9 @@ const players = [
 ];
 // games[n] = round n+1; Game has no `round` field
 const games = [
-  [{ blackId: 'B', result: 1, whiteId: 'A' }], // round 1
-  [{ blackId: 'C', result: 0.5, whiteId: 'A' }], // round 2
-  [{ blackId: 'A', result: 0, whiteId: 'D' }], // round 3
+  [{ black: 'B', result: 1, white: 'A' }], // round 1
+  [{ black: 'C', result: 0.5, white: 'A' }], // round 2
+  [{ black: 'A', result: 0, white: 'D' }], // round 3
 ];
 
 const tpr = tournamentPerformanceRating('A', games, players);

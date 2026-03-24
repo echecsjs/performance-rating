@@ -24,16 +24,16 @@ const PLAYERS: Player[] = [
 
 const GAMES: Game[][] = [
   [
-    { blackId: 'B', result: 1, whiteId: 'A' },
-    { blackId: 'D', result: 0, whiteId: 'C' },
+    { black: 'B', result: 1, white: 'A' },
+    { black: 'D', result: 0, white: 'C' },
   ],
   [
-    { blackId: 'D', result: 0.5, whiteId: 'A' },
-    { blackId: 'B', result: 0, whiteId: 'C' },
+    { black: 'D', result: 0.5, white: 'A' },
+    { black: 'B', result: 0, white: 'C' },
   ],
   [
-    { blackId: 'C', result: 1, whiteId: 'A' },
-    { blackId: 'B', result: 1, whiteId: 'D' },
+    { black: 'C', result: 1, white: 'A' },
+    { black: 'B', result: 1, white: 'D' },
   ],
 ];
 
