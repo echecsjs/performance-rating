@@ -1,5 +1,5 @@
 import { PD_TABLE } from './tables.js';
-import { BYE_SENTINEL, gamesForPlayer, playerScore } from './utilities.js';
+import { gamesForPlayer, playerScore } from './utilities.js';
 
 import type { Game, Player } from './types.js';
 
@@ -19,7 +19,7 @@ function perfectTournamentPerformance(
   players: Player[],
 ): number {
   const otbGames = gamesForPlayer(player, games).filter(
-    (g) => g.black !== BYE_SENTINEL && g.white !== BYE_SENTINEL,
+    (g) => g.black !== g.white,
   );
   if (otbGames.length === 0) {
     return 0;

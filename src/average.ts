@@ -1,4 +1,4 @@
-import { BYE_SENTINEL, gamesForPlayer } from './utilities.js';
+import { gamesForPlayer } from './utilities.js';
 
 import type { Game, Player } from './types.js';
 
@@ -10,7 +10,7 @@ function averagePerformanceRatingOfOpponents(
   players: Player[],
 ): number {
   const otbGames = gamesForPlayer(player, games).filter(
-    (g) => g.black !== BYE_SENTINEL && g.white !== BYE_SENTINEL,
+    (g) => g.black !== g.white,
   );
   const tprValues: number[] = [];
   for (const g of otbGames) {

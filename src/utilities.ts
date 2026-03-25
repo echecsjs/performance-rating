@@ -1,7 +1,5 @@
 import type { Game, Player } from './types.js';
 
-const BYE_SENTINEL = '';
-
 function gamesForPlayer(player: string, games: Game[][]): Game[] {
   return games.flat().filter((g) => g.white === player || g.black === player);
 }
@@ -13,7 +11,7 @@ function averageRatingOfOpponents(
 ): number {
   const opponentRatings: number[] = [];
   for (const g of gamesForPlayer(player, games)) {
-    if (g.black === BYE_SENTINEL || g.white === BYE_SENTINEL) {
+    if (g.black === g.white) {
       continue;
     }
     const opponentId = g.white === player ? g.black : g.white;
@@ -39,4 +37,4 @@ function playerScore(player: string, games: Game[][]): number {
   return sum;
 }
 
-export { BYE_SENTINEL, averageRatingOfOpponents, gamesForPlayer, playerScore };
+export { averageRatingOfOpponents, gamesForPlayer, playerScore };

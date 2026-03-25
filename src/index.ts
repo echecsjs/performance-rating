@@ -1,6 +1,5 @@
 import { DP_TABLE } from './tables.js';
 import {
-  BYE_SENTINEL,
   averageRatingOfOpponents,
   gamesForPlayer,
   playerScore,
@@ -15,7 +14,7 @@ function tournamentPerformanceRating(
 ): number {
   const aro = averageRatingOfOpponents(player, games, players);
   const otbGames = gamesForPlayer(player, games).filter(
-    (g) => g.black !== BYE_SENTINEL && g.white !== BYE_SENTINEL,
+    (g) => g.black !== g.white,
   );
   if (otbGames.length === 0) {
     return aro;

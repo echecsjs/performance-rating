@@ -1,5 +1,5 @@
 import { perfectTournamentPerformance } from './perfect.js';
-import { BYE_SENTINEL, gamesForPlayer } from './utilities.js';
+import { gamesForPlayer } from './utilities.js';
 
 import type { Game, Player } from './types.js';
 
@@ -9,7 +9,7 @@ function averagePerfectPerformanceOfOpponents(
   players: Player[],
 ): number {
   const otbGames = gamesForPlayer(player, games).filter(
-    (g) => g.black !== BYE_SENTINEL && g.white !== BYE_SENTINEL,
+    (g) => g.black !== g.white,
   );
   const ptpValues: number[] = [];
   for (const g of otbGames) {
