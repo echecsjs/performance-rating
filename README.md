@@ -1,7 +1,6 @@
 # Performance Rating
 
 [![npm](https://img.shields.io/npm/v/@echecs/performance-rating)](https://www.npmjs.com/package/@echecs/performance-rating)
-[![Test](https://github.com/mormubis/performance-rating/actions/workflows/test.yml/badge.svg)](https://github.com/mormubis/performance-rating/actions/workflows/test.yml)
 [![Coverage](https://codecov.io/gh/mormubis/performance-rating/branch/main/graph/badge.svg)](https://codecov.io/gh/mormubis/performance-rating)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 
