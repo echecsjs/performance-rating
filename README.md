@@ -45,55 +45,120 @@ const tpr = tournamentPerformanceRating('A', games, players);
 
 ## API
 
-All functions require a `players` array whose entries carry a `rating` field and
-return `number`. They return `0` when no rated opponents have been faced. Round
-is determined by array position: `games[0]` = round 1, `games[1]` = round 2,
-etc. The `Game` type has no `round` field. The optional `kind?: GameKind` field
-on `Game` classifies unplayed rounds; only over-the-board games (no `kind`, or
-`kind` absent) contribute to performance calculations.
-
-### `tournamentPerformanceRating(playerId, games, players)`
-
-**FIDE section 10.2** — Tournament Performance Rating (TPR). Computes the
-average rating of all opponents faced, then adds the DP_TABLE offset for the
-player's percentage score (points ÷ games played). Byes are excluded from both
-the opponent average and the score percentage.
+All functions share the same signature:
 
 ```typescript
-tournamentPerformanceRating(playerId: string, games: Game[][], players: Player[]): number
+(playerId: string, games: Game[][], players: Player[]) => number;
 ```
 
-### `perfectTournamentPerformance(playerId, games, players)`
+They return `0` when no rated opponents have been faced. Round is determined by
+array position: `games[0]` = round 1, `games[1]` = round 2, etc. The `Game` type
+has no `round` field. The optional `kind?: GameKind` field on `Game` classifies
+unplayed rounds; only over-the-board games (where `black !== white`) contribute
+to performance calculations.
 
-**FIDE section 10.3** — Perfect Tournament Performance. Computes the performance
-rating for a hypothetical scenario where the player scores 100% against the same
-set of opponents, using a binary search over the PD_TABLE scoring probability
-function. Returns `0` when no games have been played. Returns `minRating - 800`
-for a 0% score and `maxRating + 800` for a 100% score.
+### Root export — `@echecs/performance-rating`
+
+#### `tournamentPerformanceRating(playerId, games, players)` — FIDE 10.2
+
+Tournament Performance Rating (TPR). Computes the average rating of all
+opponents faced, then adds the DP_TABLE offset for the player's percentage score
+(points ÷ games played). Byes are excluded from both the opponent average and
+the score percentage.
 
 ```typescript
-perfectTournamentPerformance(playerId: string, games: Game[][], players: Player[]): number
+import { tournamentPerformanceRating } from '@echecs/performance-rating';
+// also exported as `tiebreak`
+import { tiebreak } from '@echecs/performance-rating';
 ```
 
-### `averagePerformanceRatingOfOpponents(playerId, games, players)`
+### Subpath exports
 
-**FIDE section 10.4** — Average Performance Rating of Opponents. Applies
-`tournamentPerformanceRating` to each opponent of `playerId` (using the full
-`players` and `games` data) and returns the arithmetic mean. Returns `0` when no
+#### `@echecs/performance-rating/perfect` — FIDE 10.3
+
+`perfectTournamentPerformance(playerId, games, players)` — Perfect Tournament
+Performance. Computes the performance rating for a hypothetical scenario where
+the player scores 100% against the same set of opponents, using a binary search
+over the PD_TABLE scoring probability function. Returns `0` when no games have
+been played. Returns `minRating - 800` for a 0% score and `maxRating + 800` for
+a 100% score.
+
+```typescript
+import { perfectTournamentPerformance } from '@echecs/performance-rating/perfect';
+// also exported as `tiebreak`
+import { tiebreak } from '@echecs/performance-rating/perfect';
+```
+
+#### `@echecs/performance-rating/average` — FIDE 10.4
+
+`averagePerformanceRatingOfOpponents(playerId, games, players)` — Average
+Performance Rating of Opponents. Applies `tournamentPerformanceRating` to each
+opponent of `playerId` (using the full `players` and `games` data) and returns
+the arithmetic mean. Returns `0` when no opponents have been faced.
+
+```typescript
+import { averagePerformanceRatingOfOpponents } from '@echecs/performance-rating/average';
+// also exported as `tiebreak`
+import { tiebreak } from '@echecs/performance-rating/average';
+```
+
+#### `@echecs/performance-rating/average-perfect` — FIDE 10.5
+
+`averagePerfectPerformanceOfOpponents(playerId, games, players)` — Average
+Perfect Performance of Opponents. Applies `perfectTournamentPerformance` to each
+opponent of `playerId` and returns the arithmetic mean. Returns `0` when no
 opponents have been faced.
 
 ```typescript
-averagePerformanceRatingOfOpponents(playerId: string, games: Game[][], players: Player[]): number
+import { averagePerfectPerformanceOfOpponents } from '@echecs/performance-rating/average-perfect';
+// also exported as `tiebreak`
+import { tiebreak } from '@echecs/performance-rating/average-perfect';
 ```
 
-### `averagePerfectPerformanceOfOpponents(playerId, games, players)`
+## Types
 
-**FIDE section 10.5** — Average Perfect Performance of Opponents. Applies
-`perfectTournamentPerformance` to each opponent of `playerId` and returns the
-arithmetic mean. Returns `0` when no opponents have been faced.
+All types are exported from every subpath (root, `/perfect`, `/average`,
+`/average-perfect`).
+
+### `Game`
 
 ```typescript
-averagePerfectPerformanceOfOpponents(playerId: string, games: Game[][], players: Player[]): number
+interface Game {
+  black: string;
+  kind?: GameKind;
+  result: Result;
+  white: string;
+}
+```
+
+### `Player`
+
+```typescript
+interface Player {
+  id: string;
+  rating?: number; // optional — unrated players are excluded from calculations
+}
+```
+
+### `Result`
+
+```typescript
+type Result = 0 | 0.5 | 1;
+```
+
+### `GameKind`
+
+Classifies unplayed rounds. Games with a `kind` set (or where `black === white`)
+are excluded from all performance calculations.
+
+```typescript
+type GameKind =
+  | 'forfeit-loss'
+  | 'forfeit-win'
+  | 'full-bye'
+  | 'half-bye'
+  | 'pairing-bye'
+  | 'zero-bye';
 ```
 
 ## Contributing

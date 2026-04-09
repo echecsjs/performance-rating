@@ -1,5 +1,14 @@
 # Changelog
 
+## 3.0.1 — 2026-04-09
+
+### Fixed
+
+- documented subpath exports (`/average`, `/average-perfect`, `/perfect`)
+- clarified `Player.rating` is optional
+- documented `tiebreak` export alias
+- documented `Result` and `GameKind` type exports
+
 ## 3.0.0 — 2026-03-25
 
 ### Changed
