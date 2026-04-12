@@ -1,7 +1,7 @@
 # Performance Rating
 
 [![npm](https://img.shields.io/npm/v/@echecs/performance-rating)](https://www.npmjs.com/package/@echecs/performance-rating)
-[![Coverage](https://codecov.io/gh/mormubis/performance-rating/branch/main/graph/badge.svg)](https://codecov.io/gh/mormubis/performance-rating)
+[![Coverage](https://codecov.io/gh/echecsjs/performance-rating/branch/main/graph/badge.svg)](https://codecov.io/gh/echecsjs/performance-rating)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 
 **Performance Rating** is a TypeScript library implementing performance-rating
@@ -164,4 +164,4 @@ type GameKind =
 ## Contributing
 
 Contributions are welcome. Please open an issue at
-[github.com/mormubis/performance-rating/issues](https://github.com/mormubis/performance-rating/issues).
+[github.com/echecsjs/performance-rating/issues](https://github.com/echecsjs/performance-rating/issues).

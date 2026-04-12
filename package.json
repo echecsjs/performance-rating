@@ -1,7 +1,7 @@
 {
   "author": "Adrian de la Rosa <adrian@delarosab.me>",
   "bugs": {
-    "url": "https://github.com/mormubis/performance-rating/issues"
+    "url": "https://github.com/echecsjs/performance-rating/issues"
   },
   "description": "Performance rating tiebreaks for chess tournaments following FIDE rules. Includes Tournament Performance Rating, Perfect Tournament Performance, and their opponent averages. Zero dependencies.",
   "devDependencies": {
@@ -49,7 +49,7 @@
     "README.md",
     "CHANGELOG.md"
   ],
-  "homepage": "https://github.com/mormubis/performance-rating#readme",
+  "homepage": "https://github.com/echecsjs/performance-rating#readme",
   "keywords": [
     "chess",
     "fide",
@@ -66,7 +66,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/mormubis/performance-rating.git"
+    "url": "https://github.com/echecsjs/performance-rating.git"
   },
   "scripts": {
     "build": "tsdown",
