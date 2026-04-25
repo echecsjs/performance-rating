@@ -65,6 +65,7 @@
   ],
   "license": "MIT",
   "name": "@echecs/performance-rating",
+  "packageManager": "pnpm@10.33.0",
   "publishConfig": {
     "access": "public"
   },
