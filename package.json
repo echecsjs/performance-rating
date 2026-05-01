@@ -4,6 +4,9 @@
     "url": "https://github.com/echecsjs/performance-rating/issues"
   },
   "description": "Performance rating tiebreaks for chess tournaments following FIDE rules. Includes Tournament Performance Rating, Perfect Tournament Performance, and their opponent averages. Zero dependencies.",
+  "peerDependencies": {
+    "@echecs/tournament": "^2.0.0"
+  },
   "devDependencies": {
     "@echecs/tournament": "^2.1.2",
     "@eslint/js": "^10.0.1",
