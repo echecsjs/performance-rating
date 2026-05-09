@@ -3,6 +3,7 @@
 [![npm](https://img.shields.io/npm/v/@echecs/performance-rating)](https://www.npmjs.com/package/@echecs/performance-rating)
 [![Coverage](https://codecov.io/gh/echecsjs/performance-rating/branch/main/graph/badge.svg)](https://codecov.io/gh/echecsjs/performance-rating)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
+[![Spec](https://img.shields.io/badge/Spec-FIDE-green.svg)](SPEC.md)
 
 **Performance Rating** is a TypeScript library implementing performance-rating
 tiebreaks for chess tournaments, following the
