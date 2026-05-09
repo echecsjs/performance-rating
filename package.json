@@ -55,7 +55,7 @@
     "README.md",
     "CHANGELOG.md"
   ],
-  "homepage": "https://github.com/echecsjs/performance-rating#readme",
+  "homepage": "https://performance-rating.echecs.dev",
   "keywords": [
     "chess",
     "elo",
