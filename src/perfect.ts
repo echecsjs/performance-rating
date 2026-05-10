@@ -1,7 +1,7 @@
 import { PD_TABLE } from './tables.js';
 import { gamesForPlayer, playerScore } from './utilities.js';
 
-import type { Game, Player } from './types.js';
+import type { CompletedRound, Player } from '@echecs/tournament';
 
 function scoringProbability(ratingDiff: number): number {
   const absDiff = Math.abs(ratingDiff);
@@ -15,12 +15,10 @@ function scoringProbability(ratingDiff: number): number {
 
 function perfectTournamentPerformance(
   player: string,
-  games: Game[][],
+  rounds: CompletedRound[],
   players: Player[],
 ): number {
-  const otbGames = gamesForPlayer(player, games).filter(
-    (g) => g.black !== g.white,
-  );
+  const otbGames = gamesForPlayer(player, rounds);
   if (otbGames.length === 0) {
     return 0;
   }
@@ -34,7 +32,7 @@ function perfectTournamentPerformance(
     }
   }
 
-  const actualScore = playerScore(player, games);
+  const actualScore = playerScore(player, rounds);
 
   if (actualScore === 0) {
     const minRating = Math.min(...opponentRatings);
@@ -46,7 +44,6 @@ function perfectTournamentPerformance(
     return maxRating + 800;
   }
 
-  // Binary search for R: find lowest R where sum of P(oppRating - R) >= actualScore
   let low = -5000;
   let high = 10_000;
   for (let index = 0; index < 100; index++) {
@@ -69,4 +66,10 @@ export {
   perfectTournamentPerformance as tiebreak,
 };
 
-export type { Game, GameKind, Player, Result } from './types.js';
+export type {
+  Bye,
+  CompletedRound,
+  Game,
+  Pairing,
+  Player,
+} from '@echecs/tournament';

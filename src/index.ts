@@ -5,21 +5,19 @@ import {
   playerScore,
 } from './utilities.js';
 
-import type { Game, Player } from './types.js';
+import type { CompletedRound, Player } from '@echecs/tournament';
 
 function tournamentPerformanceRating(
   player: string,
-  games: Game[][],
+  rounds: CompletedRound[],
   players: Player[],
 ): number {
-  const aro = averageRatingOfOpponents(player, games, players);
-  const otbGames = gamesForPlayer(player, games).filter(
-    (g) => g.black !== g.white,
-  );
+  const aro = averageRatingOfOpponents(player, rounds, players);
+  const otbGames = gamesForPlayer(player, rounds);
   if (otbGames.length === 0) {
     return aro;
   }
-  const actualScore = playerScore(player, games);
+  const actualScore = playerScore(player, rounds);
   const p = actualScore / otbGames.length;
   const clampedIndex = Math.min(100, Math.max(0, Math.round(p * 100)));
   const dp = DP_TABLE[clampedIndex] ?? 0;
@@ -28,4 +26,10 @@ function tournamentPerformanceRating(
 
 export { tournamentPerformanceRating, tournamentPerformanceRating as tiebreak };
 
-export type { Game, GameKind, Player, Result } from './types.js';
+export type {
+  Bye,
+  CompletedRound,
+  Game,
+  Pairing,
+  Player,
+} from '@echecs/tournament';

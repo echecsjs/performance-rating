@@ -1,19 +1,31 @@
-import type { Game, Player } from './types.js';
+import type { CompletedRound, Game, Player } from '@echecs/tournament';
 
-function gamesForPlayer(player: string, games: Game[][]): Game[] {
-  return games.flat().filter((g) => g.white === player || g.black === player);
+function gamesForPlayer(player: string, rounds: CompletedRound[]): Game[] {
+  return rounds
+    .flatMap((r) => r.games)
+    .filter((g) => g.white === player || g.black === player);
+}
+
+function scoreFor(player: string, game: Game): number {
+  if (game.result === 'draw') {
+    return 0.5;
+  }
+  if (game.result === 'none') {
+    return 0;
+  }
+  return (game.result === 'white' && game.white === player) ||
+    (game.result === 'black' && game.black === player)
+    ? 1
+    : 0;
 }
 
 function averageRatingOfOpponents(
   player: string,
-  games: Game[][],
+  rounds: CompletedRound[],
   players: Player[],
 ): number {
   const opponentRatings: number[] = [];
-  for (const g of gamesForPlayer(player, games)) {
-    if (g.black === g.white) {
-      continue;
-    }
+  for (const g of gamesForPlayer(player, rounds)) {
     const opponentId = g.white === player ? g.black : g.white;
     const opponent = players.find((p) => p.id === opponentId);
     if (opponent?.rating !== undefined) {
@@ -29,12 +41,12 @@ function averageRatingOfOpponents(
   );
 }
 
-function playerScore(player: string, games: Game[][]): number {
+function playerScore(player: string, rounds: CompletedRound[]): number {
   let sum = 0;
-  for (const g of gamesForPlayer(player, games)) {
-    sum += g.white === player ? g.result : 1 - g.result;
+  for (const g of gamesForPlayer(player, rounds)) {
+    sum += scoreFor(player, g);
   }
   return sum;
 }
 
-export { averageRatingOfOpponents, gamesForPlayer, playerScore };
+export { averageRatingOfOpponents, gamesForPlayer, playerScore, scoreFor };
