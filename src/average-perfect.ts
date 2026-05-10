@@ -1,20 +1,18 @@
 import { perfectTournamentPerformance } from './perfect.js';
 import { gamesForPlayer } from './utilities.js';
 
-import type { Game, Player } from './types.js';
+import type { CompletedRound, Player } from '@echecs/tournament';
 
 function averagePerfectPerformanceOfOpponents(
   player: string,
-  games: Game[][],
+  rounds: CompletedRound[],
   players: Player[],
 ): number {
-  const otbGames = gamesForPlayer(player, games).filter(
-    (g) => g.black !== g.white,
-  );
+  const otbGames = gamesForPlayer(player, rounds);
   const ptpValues: number[] = [];
   for (const g of otbGames) {
     const opponentId = g.white === player ? g.black : g.white;
-    const ptp = perfectTournamentPerformance(opponentId, games, players);
+    const ptp = perfectTournamentPerformance(opponentId, rounds, players);
     ptpValues.push(ptp);
   }
   if (ptpValues.length === 0) {
@@ -28,4 +26,10 @@ export {
   averagePerfectPerformanceOfOpponents as tiebreak,
 };
 
-export type { GameKind, Result, Game, Player } from './types.js';
+export type {
+  Bye,
+  CompletedRound,
+  Game,
+  Pairing,
+  Player,
+} from '@echecs/tournament';
