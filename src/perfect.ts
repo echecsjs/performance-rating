@@ -1,7 +1,7 @@
 import { PD_TABLE } from './tables.js';
 import { gamesForPlayer, playerScore } from './utilities.js';
 
-import type { CompletedRound, Player } from '@echecs/tournament';
+import type { Tiebreak } from '@echecs/tournament';
 
 function scoringProbability(ratingDiff: number): number {
   const absDiff = Math.abs(ratingDiff);
@@ -13,11 +13,7 @@ function scoringProbability(ratingDiff: number): number {
   return ratingDiff >= 0 ? 0.99 : 0.01;
 }
 
-function perfectTournamentPerformance(
-  player: string,
-  rounds: CompletedRound[],
-  players: Player[],
-): number {
+const perfectTournamentPerformance: Tiebreak = (player, rounds, players) => {
   const otbGames = gamesForPlayer(player, rounds);
   if (otbGames.length === 0) {
     return 0;
@@ -59,7 +55,7 @@ function perfectTournamentPerformance(
     }
   }
   return Math.round(high);
-}
+};
 
 export {
   perfectTournamentPerformance,

@@ -5,13 +5,9 @@ import {
   playerScore,
 } from './utilities.js';
 
-import type { CompletedRound, Player } from '@echecs/tournament';
+import type { Tiebreak } from '@echecs/tournament';
 
-function tournamentPerformanceRating(
-  player: string,
-  rounds: CompletedRound[],
-  players: Player[],
-): number {
+const tournamentPerformanceRating: Tiebreak = (player, rounds, players) => {
   const aro = averageRatingOfOpponents(player, rounds, players);
   const otbGames = gamesForPlayer(player, rounds);
   if (otbGames.length === 0) {
@@ -22,7 +18,7 @@ function tournamentPerformanceRating(
   const clampedIndex = Math.min(100, Math.max(0, Math.round(p * 100)));
   const dp = DP_TABLE[clampedIndex] ?? 0;
   return aro + dp;
-}
+};
 
 export { tournamentPerformanceRating, tournamentPerformanceRating as tiebreak };
 
