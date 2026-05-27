@@ -1,13 +1,13 @@
 import { perfectTournamentPerformance } from './perfect.js';
 import { gamesForPlayer } from './utilities.js';
 
-import type { CompletedRound, Player } from '@echecs/tournament';
+import type { Tiebreak } from '@echecs/tournament';
 
-function averagePerfectPerformanceOfOpponents(
-  player: string,
-  rounds: CompletedRound[],
-  players: Player[],
-): number {
+const averagePerfectPerformanceOfOpponents: Tiebreak = (
+  player,
+  rounds,
+  players,
+) => {
   const otbGames = gamesForPlayer(player, rounds);
   const ptpValues: number[] = [];
   for (const g of otbGames) {
@@ -19,7 +19,7 @@ function averagePerfectPerformanceOfOpponents(
     return 0;
   }
   return ptpValues.reduce((sum, v) => sum + v, 0) / ptpValues.length;
-}
+};
 
 export {
   averagePerfectPerformanceOfOpponents,
